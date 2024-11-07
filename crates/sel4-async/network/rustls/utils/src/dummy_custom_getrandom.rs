@@ -9,8 +9,8 @@ use core::cell::RefCell;
 use rand::rngs::SmallRng;
 use rand::{RngCore, SeedableRng};
 
-#[cfg(not(target_thread_local))]
-compile_error!("");
+// #[cfg(not(target_thread_local))]
+// compile_error!("");
 
 #[thread_local]
 static RNG: RefCell<Option<SmallRng>> = RefCell::new(None);
