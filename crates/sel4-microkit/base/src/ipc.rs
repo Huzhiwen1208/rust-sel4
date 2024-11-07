@@ -9,7 +9,7 @@ use crate::MessageInfo;
 use crate::{defer::PreparedDeferredAction, Channel, Child};
 
 const INPUT_CAP: sel4::cap::Endpoint = sel4::Cap::from_bits(1);
-const REPLY_CAP: sel4::cap::Reply = sel4::Cap::from_bits(4);
+// const REPLY_CAP: sel4::cap::Reply = sel4::Cap::from_bits(4);
 const MONITOR_EP_CAP: sel4::cap::Endpoint = sel4::Cap::from_bits(5);
 
 const CHANNEL_BADGE_BIT: usize = 63;
@@ -83,25 +83,25 @@ impl Iterator for NotifiedEventIter {
     }
 }
 
-pub fn reply(msg_info: MessageInfo) {
-    REPLY_CAP.send(msg_info.into_inner())
-}
+// pub fn reply(msg_info: MessageInfo) {
+//     // REPLY_CAP.send(msg_info.into_inner())
+// }
 
-pub fn recv() -> Event {
-    Event::from_recv(INPUT_CAP.recv(REPLY_CAP))
-}
+// pub fn recv() -> Event {
+//     // Event::from_recv(INPUT_CAP.recv(REPLY_CAP))
+// }
 
-pub fn reply_recv(msg_info: MessageInfo) -> Event {
-    Event::from_recv(INPUT_CAP.reply_recv(msg_info.into_inner(), REPLY_CAP))
-}
+// pub fn reply_recv(msg_info: MessageInfo) -> Event {
+//     Event::from_recv(INPUT_CAP.reply_recv(msg_info.into_inner(), REPLY_CAP))
+// }
 
-pub(crate) fn nb_send_recv(action: PreparedDeferredAction) -> Event {
-    Event::from_recv(action.cptr().nb_send_recv(
-        action.msg_info(),
-        INPUT_CAP.cast::<sel4::cap_type::Unspecified>(),
-        REPLY_CAP,
-    ))
-}
+// pub(crate) fn nb_send_recv(action: PreparedDeferredAction) -> Event {
+//     Event::from_recv(action.cptr().nb_send_recv(
+//         action.msg_info(),
+//         INPUT_CAP.cast::<sel4::cap_type::Unspecified>(),
+//         REPLY_CAP,
+//     ))
+// }
 
 pub(crate) fn forfeit_sc() -> PreparedDeferredAction {
     PreparedDeferredAction::new(
